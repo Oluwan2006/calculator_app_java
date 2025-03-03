@@ -1,0 +1,67 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BankApp {
+    private double balance = 1000.00; // Initial balance
+    private JLabel balanceLabel;
+
+    public BankApp() {
+        // Create frame
+        JFrame frame = new JFrame("Bank Application");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(350, 250);
+        frame.setLayout(new FlowLayout());
+
+        // Create balance label
+        balanceLabel = new JLabel("Current Balance: $" + balance);
+
+        // Create buttons
+        JButton depositButton = new JButton("Deposit $100");
+        JButton withdrawButton = new JButton("Withdraw $100");
+        JButton exitButton = new JButton("Exit");
+
+        // Deposit button action
+        depositButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                balance += 100;
+                updateBalance();
+            }
+        });
+
+        // Withdraw button action
+        withdrawButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (balance >= 100) {
+                    balance -= 100;
+                    updateBalance();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Insufficient funds!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // Exit button action
+        exitButton.addActionListener(e -> System.exit(0));
+
+        // Add components to frame
+        frame.add(balanceLabel);
+        frame.add(depositButton);
+        frame.add(withdrawButton);
+        frame.add(exitButton);
+
+        // Show frame
+        frame.setVisible(true);
+    }
+
+    private void updateBalance() {
+        balanceLabel.setText("Current Balance: $" + balance);
+    }
+
+    public static void main(String[] args) {
+        new BankApp();
+    }
+}
